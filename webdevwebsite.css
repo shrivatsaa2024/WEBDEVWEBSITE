@@ -24,7 +24,6 @@ body {
     color: var(--text);
     line-height: 1.6;
 }
-
 a {
     color: inherit;
     text-decoration: none;
@@ -33,6 +32,15 @@ a {
 ul {
     padding-left: 1.4em;
 }
+
+input,
+select,
+textarea,
+button {
+    font: inherit;
+    color: inherit;
+}
+
 .hidden-input {
     display: none;
 }
@@ -125,6 +133,7 @@ section {
     animation-duration: 5s;
     animation-delay: 1.2s;
 }
+
 .spark-grid {
     position: absolute;
     inset: 0;
@@ -242,12 +251,17 @@ section {
     animation-delay: 2.8s;
 }
 
+
 .track {
     display: flex;
     width: max-content;
     list-style: none;
     padding: 0;
     animation: scroll 25s linear infinite;
+}
+.track li {
+    padding: 0.7rem 2.5rem;
+    white-space: nowrap;
 }
 #prices {
     background: var(--bg);
@@ -290,7 +304,6 @@ thead {
     margin-bottom: 0.25rem;
     color: var(--muted);
 }
-
 .order-form input[type="text"],
 .order-form input[type="email"],
 .order-form input[type="tel"],
@@ -343,7 +356,6 @@ footer {
     background: #04061a;
     border-top: 1px solid rgba(255, 211, 77, 0.3);
 }
-
 footer .links {
     display: flex;
     justify-content: center;
@@ -359,4 +371,22 @@ footer a:hover {
 
 footer small {
     color: var(--muted);
+}
+
+
+@media (max-width: 450px) {
+    .logo {
+        font-size: 1.3rem;
+    }
+
+    .nav ul {
+        font-size: 0.75rem;
+    }
+    td {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.85rem;
+    }
+    section {
+        padding: 4rem 5vw;
+    }
 }
