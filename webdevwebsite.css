@@ -1,441 +1,362 @@
 :root {
-  --bg: #070b1f;
-  --bg-soft: #10163a;
-  --gold: #ffd34d;
-  --pink: #ff4d8d;
-  --cyan: #4dd8ff;
-  --lime: #9dff5c;
-  --text: #f1f3ff;
-  --muted: #a9b0d6;
+    --bg: #070b1f;
+    --bg-soft: #10163a;
+    --gold: #ffd34d;
+    --pink: #ff4d8d;
+    --cyan: #4dd8ff;
+    --text: #f1f3ff;
+    --muted: #a9b0d6;
 }
-
 * {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html { scroll-behavior: smooth; font-size: 100%; }   /* 1rem = 16px */
+html {
+    scroll-behavior: smooth;
+    font-size: 100%;
+}
 
 body {
-  font-family: "Segoe UI", Tahoma, sans-serif;
-  background: var(--bg);
-  color: var(--text);                /* inherited by every child */
-  line-height: 1.6;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
 }
 
-/* form controls do NOT inherit font by default -> force inheritance */
-input, select, textarea, button { font: inherit; color: inherit; }
+a {
+    color: inherit;
+    text-decoration: none;
+}
 
-a { color: inherit; text-decoration: none; }
-ul, ol { padding-left: 1.4em; }
-img { max-width: 100%; display: block; }
+ul {
+    padding-left: 1.4em;
+}
+.hidden-input {
+    display: none;
+}
 
-/* ---------- 2. DISPLAY ---------- */
-.hidden-input { display: none; }     /* the "fuse" checkbox (checkbox hack) */
-
-section { padding: 5rem 6vw; }       /* CSS UNITS: rem + vw */
+section {
+    padding: 5rem 6vw;
+}
 
 .section-title {
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
-  text-align: center;
-  margin-bottom: 0.4em;
-  color: var(--gold);
-}
-.section-sub {
-  text-align: center;
-  color: var(--muted);
-  max-width: 40em;                   /* em unit */
-  margin: 0 auto 3rem;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--gold);
 }
 
-/* ---------- 3. POSITIONING: fixed navbar ---------- */
 .nav {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  z-index: 100;
-  display: flex;                     /* FLEXBOX */
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.8rem 6vw;
-  background: rgba(7, 11, 31, 0.85);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255, 211, 77, 0.25);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 6vw;
+    background: rgba(7, 11, 31, 0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 211, 77, 0.2);
 }
-.logo { font-size: 1.6rem; font-weight: 800; letter-spacing: 0.15em; color: var(--gold); }
-.logo small { font-size: 0.5em; color: var(--muted); letter-spacing: 0.1em; }
-.nav ul { display: flex; gap: 1.5rem; list-style: none; padding: 0; }
-.nav a { padding: 0.3rem 0.6rem; border-radius: 6px; transition: 0.3s; }
-.nav a:hover { background: var(--gold); color: var(--bg); }
+.nav a {
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    transition: 0.3s;
+}
 
-/* ---------- Buttons + SPECIFICITY demo ---------- */
-.btn {                               /* specificity (0,1,0) */
-  display: inline-block;
-  padding: 0.8rem 1.8rem;
-  margin: 0.4rem;
-  border: 2px solid var(--gold);
-  border-radius: 50px;
-  background: var(--gold);
-  color: var(--bg);
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
-  animation: glow 2s ease-in-out infinite;
+.nav a:hover {
+    background: var(--gold);
+    color: var(--bg);
 }
-.btn:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 8px 25px var(--gold); }
-.btn.ghost {                         /* (0,2,0) beats .btn – higher specificity wins */
-  background: transparent;
-  color: var(--gold);
-  animation: none;
-}
-.hero .hero-content .fuse-btn {      /* (0,3,0) beats everything above */
-  background: var(--pink);
-  border-color: var(--pink);
-  color: #fff;
-}
-.fuse-off { display: none; }
 
-/* ---------- 4. HERO ---------- */
 .hero {
-  position: relative;                /* parent for absolutely-positioned children */
-  min-height: 100vh;                 /* vh unit */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
-  background: radial-gradient(ellipse at bottom, #1b2460 0%, var(--bg) 70%);
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at bottom, #1b2460 0%, var(--bg) 70%);
+    padding-top: 6rem;
 }
 
-/* twinkling stars: one tiny element, many box-shadows */
 .stars {
-  position: absolute;
-  top: 0; left: 0;
-  width: 3px; height: 3px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow:
-    5vw 8vh #fff, 12vw 30vh #fff, 20vw 12vh #cfe, 28vw 55vh #fff, 35vw 20vh #fff,
-    42vw 70vh #fde, 50vw 10vh #fff, 58vw 40vh #fff, 66vw 18vh #cff, 72vw 62vh #fff,
-    80vw 25vh #fff, 88vw 48vh #fed, 94vw 14vh #fff, 8vw 80vh #fff, 24vw 88vh #cfe,
-    47vw 92vh #fff, 63vw 85vh #fff, 77vw 90vh #fde, 92vw 78vh #fff, 15vw 45vh #fff;
-  animation: twinkle 3s ease-in-out infinite;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow:
+        5vw 8vh #fff,
+        12vw 30vh #fff,
+        20vw 12vh #cfe,
+        28vw 55vh #fff,
+        35vw 20vh #fff,
+        42vw 70vh #fde,
+        50vw 10vh #fff,
+        58vw 40vh #fff,
+        66vw 18vh #cff,
+        72vw 62vh #fff,
+        80vw 25vh #fff,
+        88vw 48vh #fed,
+        94vw 14vh #fff,
+        8vw 80vh #fff,
+        24vw 88vh #cfe,
+        47vw 92vh #fff,
+        63vw 85vh #fff,
+        77vw 90vh #fde,
+        92vw 78vh #fff,
+        15vw 45vh #fff;
+    animation: twinkle 3s ease-in-out infinite;
 }
+
 .stars.s2 {
-  top: 6vh; left: 3vw;
-  width: 2px; height: 2px;
-  animation-duration: 5s;
-  animation-delay: 1.2s;
+    top: 6vh;
+    left: 3vw;
+    width: 2px;
+    height: 2px;
+    animation-duration: 5s;
+    animation-delay: 1.2s;
 }
-
-/* ---- Mouse spark trail (CSS-only!) : a grid of invisible cells ---- */
 .spark-grid {
-  position: absolute;
-  inset: 0;                          /* shorthand for top/right/bottom/left: 0 */
-  z-index: 1;
-  display: grid;                     /* GRID */
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(8, 1fr);
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(8, 1fr);
 }
+
 .spark-grid i {
-  --c: var(--gold);                  /* custom property, inherited by ::after */
-  display: grid;
-  place-items: center;
+    --c: var(--gold);
+    display: grid;
+    place-items: center;
 }
-.spark-grid i:nth-child(4n+1) { --c: var(--gold); }
-.spark-grid i:nth-child(4n+2) { --c: var(--pink); }
-.spark-grid i:nth-child(4n+3) { --c: var(--cyan); }
-.spark-grid i:nth-child(4n)   { --c: var(--lime); }
+
+.spark-grid i:nth-child(4n+1) {
+    --c: var(--gold);
+}
+
+.spark-grid i:nth-child(4n+2) {
+    --c: var(--pink);
+}
+
+.spark-grid i:nth-child(4n+3) {
+    --c: var(--cyan);
+}
+
+.spark-grid i:nth-child(4n) {
+    --c: #9dff5c;
+}
+
 .spark-grid i::after {
-  content: "";
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: transparent;
-  transition: background 1.4s, box-shadow 1.4s, transform 1.4s;   /* slow fade OUT */
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: transparent;
+    transition: background 1.4s, box-shadow 1.4s, transform 1.4s;
 }
+
 .spark-grid i:hover::after {
-  background: var(--c);
-  box-shadow: 0 0 18px 8px var(--c);
-  transform: scale(2.2);
-  transition: 0s;                    /* instant light-up IN */
+    background: var(--c);
+    box-shadow: 0 0 14px 5px var(--c);
+    transform: scale(1.8);
+    transition: 0s;
 }
 
-/* hero text sits above the grid but lets the mouse pass through */
 .hero-content {
-  position: relative;
-  z-index: 2;
-  pointer-events: none;
-  padding: 0 5vw;
+    position: relative;
+    z-index: 2;
+    padding: 0 5vw;
+    pointer-events: none;
 }
-.hero-content .btn { pointer-events: auto; }
-.tag { color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.85rem; }
+
+.tag {
+    color: var(--cyan);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
 .hero h1 {
-  font-size: clamp(4rem, 14vw, 9rem);
-  line-height: 1;
-  letter-spacing: 0.1em;
-  color: var(--gold);
-  text-shadow: 0 0 25px rgba(255, 211, 77, 0.6);
-  animation: float 4s ease-in-out infinite;
+    font-size: clamp(4rem, 14vw, 9rem);
+    line-height: 1;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-shadow: 0 0 18px rgba(255, 211, 77, 0.45);
 }
+
 .hero h1 span {
-  display: block;
-  font-size: 0.2em;
-  letter-spacing: 0.5em;
-  color: #fff;
-  text-shadow: none;
+    display: block;
+    font-size: 0.2em;
+    letter-spacing: 0.5em;
+    color: #fff;
+    text-shadow: none;
 }
-.hero p.lead { max-width: 34em; margin: 1rem auto 1.5rem; color: var(--muted); }
-
-/* ---- Firework bursts (box-shadow rings + keyframes) ---- */
-.burst {
-  position: absolute;
-  z-index: 0;
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  opacity: 0;
-  --bc: var(--gold);
-  box-shadow:
-    100px 0 0 var(--bc), 87px 50px 0 var(--bc), 50px 87px 0 var(--bc), 0 100px 0 var(--bc),
-    -50px 87px 0 var(--bc), -87px 50px 0 var(--bc), -100px 0 0 var(--bc), -87px -50px 0 var(--bc),
-    -50px -87px 0 var(--bc), 0 -100px 0 var(--bc), 50px -87px 0 var(--bc), 87px -50px 0 var(--bc),
-    50px 0 0 #fff, 43px 25px 0 #fff, 25px 43px 0 #fff, 0 50px 0 #fff,
-    -25px 43px 0 #fff, -43px 25px 0 #fff, -50px 0 0 #fff, -43px -25px 0 #fff,
-    -25px -43px 0 #fff, 0 -50px 0 #fff, 25px -43px 0 #fff, 43px -25px 0 #fff;
-  animation: burst 3.5s ease-out infinite;
-}
-.b1 { top: 22%; left: 18%; --bc: var(--gold); }
-.b2 { top: 32%; left: 78%; --bc: var(--pink); animation-delay: 1.2s; }
-.b3 { top: 62%; left: 50%; --bc: var(--cyan); animation-delay: 2.3s; }
-/* finale bursts hidden until the fuse is lit */
-.b4, .b5, .b6 { display: none; }
-.b4 { top: 15%; left: 45%; --bc: var(--lime); }
-.b5 { top: 55%; left: 12%; --bc: var(--pink); }
-.b6 { top: 50%; left: 88%; --bc: var(--gold); }
-
-.finale {
-  position: absolute;
-  z-index: 2;
-  bottom: 8%;
-  left: 0; right: 0;
-  font-size: clamp(1.5rem, 5vw, 3rem);
-  font-weight: 800;
-  color: var(--pink);
-  text-shadow: 0 0 20px var(--pink);
-  opacity: 0;
-  pointer-events: none;
+.b1 {
+    top: 22%;
+    left: 18%;
+    --bc: var(--gold);
 }
 
-/* ===== THE CHECKBOX HACK: label toggles hidden checkbox; ~ selects later siblings ===== */
-#fuse:checked ~ main .hero { animation: shake 0.4s 4; background: radial-gradient(ellipse at bottom, #5a1a50 0%, var(--bg) 70%); }
-#fuse:checked ~ main .b4,
-#fuse:checked ~ main .b5,
-#fuse:checked ~ main .b6 { display: block; }
-#fuse:checked ~ main .burst { animation-duration: 1.4s; }
-#fuse:checked ~ main .finale { animation: pop 1.2s ease-in-out infinite; }
-#fuse:checked ~ main .fuse-on  { display: none; }
-#fuse:checked ~ main .fuse-off { display: inline-block; }
-
-/* ---------- 5. OFFER MARQUEE ---------- */
-.marquee {
-  overflow: hidden;
-  background: var(--gold);
-  color: var(--bg);
-  font-weight: 700;
+.b2 {
+    top: 32%;
+    left: 78%;
+    --bc: var(--pink);
+    animation-delay: 1.2s;
 }
+
+.b3 {
+    top: 62%;
+    left: 50%;
+    --bc: var(--cyan);
+    animation-delay: 2.3s;
+}
+
+.b4 {
+    top: 15%;
+    left: 45%;
+    --bc: #9dff5c;
+    animation-delay: 0.8s;
+}
+
+.b5 {
+    top: 55%;
+    left: 12%;
+    --bc: var(--pink);
+    animation-delay: 1.8s;
+}
+
+.b6 {
+    top: 50%;
+    left: 88%;
+    --bc: var(--gold);
+    animation-delay: 2.8s;
+}
+
 .track {
-  display: flex;
-  width: max-content;
-  list-style: none;
-  padding: 0;
-  animation: scroll 25s linear infinite;
+    display: flex;
+    width: max-content;
+    list-style: none;
+    padding: 0;
+    animation: scroll 25s linear infinite;
 }
-.track li { padding: 0.7rem 2.5rem; white-space: nowrap; }
-.marquee:hover .track { animation-play-state: paused; }
+#prices {
+    background: var(--bg);
+}
 
-/* ---------- 6. PRODUCT CARDS (GRID + flip animation) ---------- */
-.products { background: var(--bg-soft); }
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: 2rem;
-  max-width: 75rem;
-  margin: 0 auto;
+.table-wrap {
+    max-width: 60rem;
+    margin: 0 auto;
+    overflow-x: auto;
 }
-.card {
-  height: 18rem;
-  perspective: 1000px;
-  outline: none;
-}
-.card-inner {
-  position: relative;
-  width: 100%; height: 100%;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-}
-.card:hover .card-inner,
-.card:focus .card-inner { transform: rotateY(180deg); }
-.face {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 1.5rem;
-  border: 2px solid rgba(255, 211, 77, 0.35);
-  border-radius: 18px;
-  backface-visibility: hidden;
-  background: linear-gradient(145deg, #1a2150, #0c1233);
-}
-.face.back { transform: rotateY(180deg); background: linear-gradient(145deg, #3a1450, #150c33); }
-.emoji { font-size: 4.5rem; animation: float 3s ease-in-out infinite; }
-.face h3 { color: var(--gold); margin: 0.4rem 0; }
-.face p { color: var(--muted); font-size: 0.9rem; }
-.face ul { margin: 0.5rem 0; color: var(--text); }
-.price { font-size: 1.8rem; font-weight: 800; color: var(--lime) !important; }
 
-/* ---------- 7. PRICE TABLE ---------- */
-.table-wrap { max-width: 60rem; margin: 0 auto; overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; }
-caption { font-size: 1.1rem; padding: 0.8rem; color: var(--cyan); }
-th, td { padding: 0.9rem 1rem; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
-thead { background: var(--gold); color: var(--bg); }
-tbody tr { transition: background 0.3s, transform 0.3s; }
-tbody tr:hover { background: rgba(255, 77, 141, 0.2); transform: scale(1.02); }
-tbody tr:nth-child(even) { background: rgba(255, 255, 255, 0.04); }
-tfoot td { color: var(--muted); font-size: 0.85rem; text-align: center; }
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+td {
+    padding: 0.9rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
 
-/* ---------- 8. COMBO BUILDER (counter + sibling selectors) ---------- */
-.builder { background: var(--bg-soft); }
-.combo {
-  max-width: 50rem;
-  margin: 0 auto;
-  padding: 2rem;
-  border: 2px dashed var(--pink);
-  border-radius: 20px;
-  counter-reset: picked;              /* CSS counter starts at 0 */
+thead {
+    background: var(--gold);
+    color: var(--bg);
 }
-fieldset {
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  padding: 1.2rem;
-  margin-bottom: 1.2rem;
-}
-legend { padding: 0 0.6rem; color: var(--cyan); font-weight: 700; }
-.chips { display: flex; flex-wrap: wrap; gap: 0.7rem; }
-fieldset input[type="checkbox"],
-fieldset input[type="radio"] {
-  position: absolute;                 /* visually hidden, but still counted */
-  opacity: 0;
-  pointer-events: none;
-}
-fieldset input + label {
-  display: inline-block;
-  padding: 0.5rem 1.1rem;
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  border-radius: 50px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-fieldset input + label:hover { border-color: var(--gold); transform: translateY(-3px); }
-fieldset input:checked + label {
-  background: var(--pink);
-  border-color: var(--pink);
-  box-shadow: 0 0 15px var(--pink);
-}
-.chips input:checked { counter-increment: picked; }   /* +1 for every ticked box */
-.count { text-align: center; font-size: 1.2rem; margin-bottom: 1rem; }
-.count::after { content: counter(picked) " cracker type(s) in your box"; color: var(--gold); font-weight: 700; }
 
-.size-note { display: none; margin-top: 0.8rem; width: 100%; color: var(--lime); }
-#sz1:checked ~ .n1,
-#sz2:checked ~ .n2,
-#sz3:checked ~ .n3 { display: block; animation: pop-in 0.5s; }
-
-/* ---------- 9. SAFETY (flex, two columns) ---------- */
-.safety-cols { display: flex; gap: 2rem; max-width: 60rem; margin: 0 auto; }
-.safety-cols > div {
-  flex: 1;
-  padding: 1.8rem;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border-top: 5px solid var(--lime);
+.order {
+    background: var(--bg-soft);
 }
-.safety-cols > div.dont { border-top-color: var(--pink); }
-.safety-cols h3 { margin-bottom: 0.8rem; }
-.safety-cols li { margin-bottom: 0.5rem; }
 
-/* ---------- 10. ORDER FORM ---------- */
-.order { background: var(--bg-soft); }
 .order-form {
-  max-width: 42rem;
-  margin: 0 auto;
-  display: grid;
-  gap: 1.1rem;
+    max-width: 42rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1.1rem;
 }
-.order-form label { display: block; margin-bottom: 0.25rem; color: var(--muted); }
+
+.order-form label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--muted);
+}
+
 .order-form input[type="text"],
 .order-form input[type="email"],
 .order-form input[type="tel"],
 .order-form input[type="date"],
 .order-form select,
 .order-form textarea {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  background: var(--bg);
-  transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    background: var(--bg);
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
+
 .order-form input:focus,
 .order-form select:focus,
 .order-form textarea:focus {
-  outline: none;
-  border-color: var(--gold);
-  box-shadow: 0 0 15px rgba(255, 211, 77, 0.5);
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 12px rgba(255, 211, 77, 0.35);
 }
-.row { display: flex; gap: 1rem; }
-.row > div { flex: 1; }
-.inline-opts { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-.inline-opts label { display: inline; color: var(--text); }
-.order-form .btn { width: 100%; margin: 0; font-size: 1.1rem; }
+.row {
+    display: flex;
+    gap: 1rem;
+}
+.row > div {
+    flex: 1;
+}
 
-/* ---------- 11. FOOTER ---------- */
+.btn {
+    width: 100%;
+    padding: 0.8rem 1.8rem;
+    border: 2px solid var(--gold);
+    border-radius: 50px;
+    background: var(--gold);
+    color: var(--bg);
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(255, 211, 77, 0.35);
+}
+
 footer {
-  text-align: center;
-  padding: 3rem 6vw;
-  background: #04061a;
-  border-top: 1px solid rgba(255, 211, 77, 0.3);
+    text-align: center;
+    padding: 3rem 6vw;
+    background: #04061a;
+    border-top: 1px solid rgba(255, 211, 77, 0.3);
 }
-footer .links { display: flex; justify-content: center; gap: 2rem; list-style: none; padding: 0; margin: 1rem 0; }
-footer a:hover { color: var(--gold); }
-footer small { color: var(--muted); }
 
-/* ---------- 12. KEYFRAME ANIMATIONS ---------- */
-@keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.15; } }
-@keyframes float   { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
-@keyframes glow    { 0%, 100% { box-shadow: 0 0 5px var(--gold); } 50% { box-shadow: 0 0 22px var(--gold); } }
-@keyframes burst   { 0% { transform: scale(0.1); opacity: 1; } 70% { opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
-@keyframes scroll  { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@keyframes shake   { 0%, 100% { transform: translate(0); } 25% { transform: translate(-6px, 3px); } 75% { transform: translate(6px, -3px); } }
-@keyframes pop     { 0%, 100% { opacity: 0.3; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.15); } }
-@keyframes pop-in  { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+footer .links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
 
-/* ---------- 13. MEDIA QUERIES (responsive) ---------- */
-@media (max-width: 900px) {
-  section { padding: 4rem 5vw; }
-  .safety-cols { flex-direction: column; }
+footer a:hover {
+    color: var(--gold);
 }
-@media (max-width: 700px) {
-  .nav { flex-direction: column; gap: 0.4rem; padding: 0.6rem 4vw; }
-  .nav ul { gap: 0.4rem; flex-wrap: wrap; justify-content: center; font-size: 0.85rem; }
-  .row { flex-direction: column; }
-  .spark-grid { grid-template-columns: repeat(8, 1fr); }
-  .burst { transform-origin: center; }
-  .card { height: 17rem; }
-}
-@media (max-width: 450px) {
-  .btn { display: block; }
-  th, td { padding: 0.6rem 0.5rem; font-size: 0.85rem; }
+
+footer small {
+    color: var(--muted);
 }
